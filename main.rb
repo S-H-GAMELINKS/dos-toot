@@ -18,5 +18,6 @@ params = {
 }
 
 10.times do
-  client.create_status(text, params)
+  response = client.create_status(text, params)
+  logger.info(response)
 end
