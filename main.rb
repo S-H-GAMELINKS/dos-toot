@@ -8,16 +8,24 @@ Dotenv.load
 # ロガーの生成
 logger = Logger.new(STDERR)
 
+# 実行回数を受け取る
+num = gets.to_i
 
+logger.info("Num = #{num}")
+
+# Mastodonのクライアント生成
 client = Mastodon::REST::Client.new(base_url: ENV['MASTODON_URL'], bearer_token: ENV['ACCESS_TOKEN'])
 
-text = 'Set a fire in your heart, Spartan! Bare your fangs! Fight hard! Die well.'
+# 投稿内容を設定
+text = ENV['STATUS_TEXT']
 
+# 公開範囲を設定
 params = {
-  visibility: 'unlisted'
+  visibility: ENV['STAUTS_VISIBILITY']
 }
 
-10.times do
+# 実行回数分だけ投稿を作成
+num.times do
   response = client.create_status(text, params)
   logger.info(response)
 end
